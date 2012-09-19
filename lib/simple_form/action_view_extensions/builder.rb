@@ -3,6 +3,7 @@ module SimpleForm
     # A collection of methods required by simple_form but added to rails default form.
     # This means that you can use such methods outside simple_form context.
     module Builder
+      include ActionView::Helpers::FormTagHelper
 
       # Create a collection of radio inputs for the attribute. Basically this
       # helper will create a radio input associated with a label for each
@@ -37,7 +38,7 @@ module SimpleForm
           default_html_options = default_html_options_for_collection(item, value, options, html_options)
 
           result << radio_button(attribute, value, default_html_options) <<
-                    label("#{attribute}_#{value}".downcase, text, :class => "collection_radio")
+                    label(sanitize_to_id("#{attribute}_#{value}").downcase, text, :class => "collection_radio")
         end
       end
 
@@ -77,7 +78,7 @@ module SimpleForm
           default_html_options[:multiple] = true
 
           result << check_box(attribute, default_html_options, value, '') <<
-                    label("#{attribute}_#{value}".downcase, text, :class => "collection_check_boxes")
+                    label(sanitize_to_id("#{attribute}_#{value}").downcase, text, :class => "collection_check_boxes")
         end
       end
 
